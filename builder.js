@@ -1,3 +1,11 @@
+// FORCED PATH RESOLUTION - PLACE AT TOP
+try {
+    require.resolve('sharp');
+} catch (e) {
+    console.error("Critical Error: sharp module not found. Path:", process.env.NODE_PATH);
+    process.exit(1);
+}
+
 const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
@@ -15,6 +23,13 @@ async function build() {
     }
 
     const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
+    
+    // Check if images directory exists
+    if (!fs.existsSync(IMAGE_DIR)) {
+        console.error("Error: images directory not found!");
+        process.exit(1);
+    }
+
     const folders = fs.readdirSync(IMAGE_DIR).filter(f => 
         fs.statSync(path.join(IMAGE_DIR, f)).isDirectory()
     ).sort().reverse(); 
@@ -40,12 +55,12 @@ async function build() {
 
             try {
                 // If it's already a webp and exists, just use it
-                if (ext === '.webp' && fs.existsSync(outputPath)) {
+                if (ext === '.webp') {
                     processedImages.push(generateMetaData(img));
                     continue;
                 }
 
-                // Optimization / Conversion process
+                // Conversion process
                 if (!fs.existsSync(outputPath)) {
                     console.log(`Processing: ${img} -> ${finalWebpName}`);
                     await sharp(inputPath)
@@ -53,8 +68,9 @@ async function build() {
                         .webp({ quality: 80 })
                         .toFile(outputPath);
                     
-                    // Only delete if conversion was successful
-                    if (isHeif) fs.unlinkSync(inputPath); 
+                    if (isHeif && fs.existsSync(outputPath)) {
+                        fs.unlinkSync(inputPath); 
+                    }
                 }
                 
                 processedImages.push(generateMetaData(finalWebpName));
@@ -63,8 +79,8 @@ async function build() {
             }
         }
 
-        // SAFETY CHECK: Only generate HTML if we have at least one working image
-        if (processedImages.length > 0) {
+        // SAFETY CHECK: Ensure array isn't empty before accessing [0]
+        if (processedImages && processedImages.length > 0) {
             const galleryTitle = folder.replace(/-/g, ' ').toUpperCase();
             const albumId = `album${index + 1}`;
             const itemClass = `item-${(index % 5) + 1}`;
@@ -93,7 +109,7 @@ async function build() {
     );
 
     fs.writeFileSync(OUTPUT_FILE, result);
-    console.log(`Successfully built anthology with ${htmlInjection.split('album-trigger').length - 1} galleries.`);
+    console.log(`Successfully built anthology.`);
 }
 
 function generateMetaData(fileName) {
@@ -107,4 +123,7 @@ function generateMetaData(fileName) {
     };
 }
 
-build();
+build().catch(err => {
+    console.error("Unhandled Build Error:", err);
+    process.exit(1);
+});

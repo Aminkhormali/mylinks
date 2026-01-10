@@ -6,28 +6,41 @@ const TEMPLATE_FILE = './template.html';
 const OUTPUT_FILE = './anthology.html';
 
 function build() {
-    console.log('Building Portfolio...');
+    console.log('--- Starting Anthology Build ---');
+    
+    if (!fs.existsSync(TEMPLATE_FILE)) {
+        console.error("Error: template.html not found!");
+        return;
+    }
+
+    if (!fs.existsSync(IMAGE_DIR)) {
+        console.log("Images directory not found. Creating it...");
+        fs.mkdirSync(IMAGE_DIR);
+    }
+
     const template = fs.readFileSync(TEMPLATE_FILE, 'utf8');
     
-    // Scan folders
+    // Scan folders inside /images
     const folders = fs.readdirSync(IMAGE_DIR).filter(f => 
         fs.statSync(path.join(IMAGE_DIR, f)).isDirectory()
-    ).sort();
+    ).sort().reverse(); 
 
     let htmlInjection = '';
 
     folders.forEach((folder, index) => {
         const folderPath = path.join(IMAGE_DIR, folder);
-        const images = fs.readdirSync(folderPath).filter(img => /\.(jpg|jpeg|png|webp)$/i.test(img));
+        const images = fs.readdirSync(folderPath).filter(img => /\.(jpg|jpeg|png|webp|gif)$/i.test(img));
 
         if (images.length === 0) return;
 
+        // "2026-MED" -> Tag: "2026 | MED", Title: "MED"
         const tag = folder.replace('-', ' | ');
-        const title = folder.split('-').pop().toUpperCase();
+        const folderParts = folder.split('-');
+        const title = folderParts.length > 1 ? folderParts.slice(1).join(' ').toUpperCase() : folder.toUpperCase();
+        
         const albumId = `album${index + 1}`;
         const itemClass = `item-${(index % 5) + 1}`;
 
-        // Create images for the 3D viewer
         const imgTags = images.map(img => 
             `<img src="images/${folder}/${img}" data-tag="${tag}" data-cap="Archive Entry: ${img.split('.')[0]}">`
         ).join('\n');
@@ -48,13 +61,9 @@ function build() {
     );
 
     fs.writeFileSync(OUTPUT_FILE, result);
-    console.log('Successfully generated index.html');
+    console.log(`Successfully generated ${OUTPUT_FILE}`);
+    console.log('--- Build Complete ---');
 }
 
-// Initial Build
+// Run the build once
 build();
-
-// Watch for changes
-fs.watch(IMAGE_DIR, { recursive: true }, (event, filename) => {
-    if (filename) build();
-});

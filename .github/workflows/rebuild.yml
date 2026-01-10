@@ -6,21 +6,21 @@ on:
       - 'images/**'
       - 'template.html'
       - 'builder.js'
-  workflow_dispatch: # This adds a manual "Run" button in GitHub Actions
+  workflow_dispatch: # Allows you to run it manually from the Actions tab
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Crucial for pushing the file back
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetches all history for a clean merge
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Run Builder Script
         run: node builder.js
@@ -30,6 +30,5 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add anthology.html
-          git commit -m "Update anthology gallery [skip ci]" || echo "No changes to commit"
-          git pull --rebase origin main # Merge any remote changes first
-          git push origin main
+          git commit -m "Update anthology gallery" || echo "No changes"
+          git push

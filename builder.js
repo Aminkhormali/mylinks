@@ -7,9 +7,8 @@ const TEMPLATE_FILE = './template.html';
 const OUTPUT_FILE = './anthology.html';
 
 async function build() {
-    console.log('--- Starting Anthology Build ---');
+    console.log('--- Starting Optimized Anthology Build ---');
     
-    // Safety check for template
     if (!fs.existsSync(TEMPLATE_FILE)) {
         console.error("Error: template.html not found!");
         process.exit(1);
@@ -32,35 +31,35 @@ async function build() {
 
         for (const img of rawImages) {
             const ext = path.extname(img).toLowerCase();
-            let finalFileName = img;
-            
-            // HEIF Conversion Logic
-            if (ext === '.heif' || ext === '.heic') {
-                const newName = img.replace(/\.(heif|heic)$/i, '.webp');
-                const inputPath = path.join(folderPath, img);
-                const outputPath = path.join(folderPath, newName);
+            const isHeif = ext === '.heif' || ext === '.heic';
+            const newName = isHeif ? img.replace(/\.(heif|heic)$/i, '.webp') : img;
+            const inputPath = path.join(folderPath, img);
+            const outputPath = path.join(folderPath, newName);
 
-                if (!fs.existsSync(outputPath)) {
-                    console.log(`Converting ${img} to WebP...`);
-                    await sharp(inputPath).rotate().toFormat('webp').toFile(outputPath);
+            // Logic: Convert HEIF OR Optimize existing images if they are huge
+            if (isHeif || !img.endsWith('.webp')) {
+                const finalWebpName = img.split('.')[0] + '.webp';
+                const finalOutputPath = path.join(folderPath, finalWebpName);
+
+                if (!fs.existsSync(finalOutputPath)) {
+                    console.log(`Optimizing & Converting: ${img}`);
+                    try {
+                        await sharp(inputPath)
+                            .rotate() 
+                            .webp({ quality: 80, effort: 6 }) // Optimization settings
+                            .toFile(finalOutputPath);
+                        processedImages.push(generateMetaData(finalWebpName));
+                    } catch (err) {
+                        console.error(`Failed to process ${img}:`, err);
+                    }
+                } else {
+                    processedImages.push(generateMetaData(finalWebpName));
                 }
-                finalFileName = newName;
+            } else {
+                processedImages.push(generateMetaData(img));
             }
-
-            // Parsing: Date-Tag-Caption.webp
-            // Example: 2026-Imaging-Neural Segmentation Result.webp
-            const nameClean = finalFileName.replace(/\.[^/.]+$/, "");
-            const parts = nameClean.split('-'); 
-            
-            processedImages.push({
-                file: finalFileName,
-                date: parts[0] || "2026",
-                tag: parts[1] || "Research",
-                caption: parts.slice(2).join(' ') || "Visual Analysis"
-            });
         }
 
-        // Gallery name from folder name
         const galleryTitle = folder.replace(/-/g, ' ').toUpperCase();
         const albumId = `album${index + 1}`;
         const itemClass = `item-${(index % 5) + 1}`;
@@ -82,17 +81,25 @@ async function build() {
         </div>`;
     }
 
-    // Replace the grid content in your template
     const result = template.replace(
         /<main class="archive-float">([\s\S]*?)<\/main>/,
         `<main class="archive-float">\n${htmlInjection}\n</main>`
     );
 
     fs.writeFileSync(OUTPUT_FILE, result);
-    console.log(`Success: ${processedImages.length} images processed across ${folders.length} galleries.`);
+    console.log(`Build Complete. Check ${OUTPUT_FILE}`);
 }
 
-build().catch(err => {
-    console.error("Build failed:", err);
-    process.exit(1);
-});
+// Helper to parse: Date-Tag-Caption
+function generateMetaData(fileName) {
+    const nameClean = fileName.replace(/\.[^/.]+$/, "");
+    const parts = nameClean.split('-'); 
+    return {
+        file: fileName,
+        date: parts[0] || "2026",
+        tag: parts[1] || "Research",
+        caption: parts.slice(2).join(' ') || "Visual Analysis"
+    };
+}
+
+build();

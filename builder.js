@@ -32,35 +32,29 @@ async function build() {
         for (const img of rawImages) {
             const ext = path.extname(img).toLowerCase();
             const isHeif = ext === '.heif' || ext === '.heic';
-            const newName = isHeif ? img.replace(/\.(heif|heic)$/i, '.webp') : img;
+            const finalWebpName = img.replace(/\.(jpg|jpeg|png|heif|heic)$/i, '.webp');
             const inputPath = path.join(folderPath, img);
-            const outputPath = path.join(folderPath, newName);
+            const outputPath = path.join(folderPath, finalWebpName);
 
-            // Logic: Convert HEIF OR Optimize existing images if they are huge
-            if (isHeif || !img.endsWith('.webp')) {
-                const finalWebpName = img.split('.')[0] + '.webp';
-                const finalOutputPath = path.join(folderPath, finalWebpName);
-
-                if (!fs.existsSync(finalOutputPath)) {
-                    console.log(`Optimizing & Converting: ${img}`);
-                    try {
-                        await sharp(inputPath)
-                            .rotate() 
-                            .webp({ quality: 80, effort: 6 }) // Optimization settings
-                            .toFile(finalOutputPath);
-                        processedImages.push(generateMetaData(finalWebpName));
-                    } catch (err) {
-                        console.error(`Failed to process ${img}:`, err);
-                    }
-                } else {
-                    processedImages.push(generateMetaData(finalWebpName));
-                }
-            } else {
-                processedImages.push(generateMetaData(img));
+            if (!fs.existsSync(outputPath)) {
+                try {
+                    await sharp(inputPath).rotate().webp({ quality: 80 }).toFile(outputPath);
+                    if (isHeif) fs.unlinkSync(inputPath); // Optional: remove original HEIF
+                } catch (err) { console.error(`Error processing ${img}:`, err); continue; }
             }
+
+            // Parsing Date-Tag-Caption (e.g., 2026-Dental-Result.webp)
+            const nameClean = finalWebpName.replace('.webp', "");
+            const parts = nameClean.split('-'); 
+            processedImages.push({
+                file: finalWebpName,
+                date: parts[0] || "2026",
+                tag: parts[1] || "Project",
+                caption: parts.slice(2).join(' ') || "Visual Archive"
+            });
         }
 
-        const galleryTitle = folder.replace(/-/g, ' ').toUpperCase();
+        const albumTitle = folder.replace(/-/g, ' ').toUpperCase();
         const albumId = `album${index + 1}`;
         const itemClass = `item-${(index % 5) + 1}`;
 
@@ -73,7 +67,7 @@ async function build() {
             <img src="images/${folder}/${processedImages[0].file}">
             <div class="trigger-info">
                 <span>PROJECT 0${index + 1}</span>
-                <h3>${galleryTitle}</h3>
+                <h3>${albumTitle}</h3>
             </div>
             <div id="${albumId}-data" style="display:none;">
                 <div class="imgs">${imgTags}</div>
@@ -81,25 +75,14 @@ async function build() {
         </div>`;
     }
 
+    // CRITICAL: This regex targets the MAIN tag which is below your header
     const result = template.replace(
         /<main class="archive-float">([\s\S]*?)<\/main>/,
         `<main class="archive-float">\n${htmlInjection}\n</main>`
     );
 
     fs.writeFileSync(OUTPUT_FILE, result);
-    console.log(`Build Complete. Check ${OUTPUT_FILE}`);
-}
-
-// Helper to parse: Date-Tag-Caption
-function generateMetaData(fileName) {
-    const nameClean = fileName.replace(/\.[^/.]+$/, "");
-    const parts = nameClean.split('-'); 
-    return {
-        file: fileName,
-        date: parts[0] || "2026",
-        tag: parts[1] || "Research",
-        caption: parts.slice(2).join(' ') || "Visual Analysis"
-    };
+    console.log(`Success! Generated ${OUTPUT_FILE}`);
 }
 
 build();

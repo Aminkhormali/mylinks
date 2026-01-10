@@ -32,57 +32,79 @@ async function build() {
         for (const img of rawImages) {
             const ext = path.extname(img).toLowerCase();
             const isHeif = ext === '.heif' || ext === '.heic';
+            
+            // Standardize output name to .webp
             const finalWebpName = img.replace(/\.(jpg|jpeg|png|heif|heic)$/i, '.webp');
             const inputPath = path.join(folderPath, img);
             const outputPath = path.join(folderPath, finalWebpName);
 
-            if (!fs.existsSync(outputPath)) {
-                try {
-                    await sharp(inputPath).rotate().webp({ quality: 80 }).toFile(outputPath);
-                    if (isHeif) fs.unlinkSync(inputPath); // Optional: remove original HEIF
-                } catch (err) { console.error(`Error processing ${img}:`, err); continue; }
-            }
+            try {
+                // If it's already a webp and exists, just use it
+                if (ext === '.webp' && fs.existsSync(outputPath)) {
+                    processedImages.push(generateMetaData(img));
+                    continue;
+                }
 
-            // Parsing Date-Tag-Caption (e.g., 2026-Dental-Result.webp)
-            const nameClean = finalWebpName.replace('.webp', "");
-            const parts = nameClean.split('-'); 
-            processedImages.push({
-                file: finalWebpName,
-                date: parts[0] || "2026",
-                tag: parts[1] || "Project",
-                caption: parts.slice(2).join(' ') || "Visual Archive"
-            });
+                // Optimization / Conversion process
+                if (!fs.existsSync(outputPath)) {
+                    console.log(`Processing: ${img} -> ${finalWebpName}`);
+                    await sharp(inputPath)
+                        .rotate()
+                        .webp({ quality: 80 })
+                        .toFile(outputPath);
+                    
+                    // Only delete if conversion was successful
+                    if (isHeif) fs.unlinkSync(inputPath); 
+                }
+                
+                processedImages.push(generateMetaData(finalWebpName));
+            } catch (err) {
+                console.error(`Skipping ${img} due to error:`, err.message);
+            }
         }
 
-        const albumTitle = folder.replace(/-/g, ' ').toUpperCase();
-        const albumId = `album${index + 1}`;
-        const itemClass = `item-${(index % 5) + 1}`;
+        // SAFETY CHECK: Only generate HTML if we have at least one working image
+        if (processedImages.length > 0) {
+            const galleryTitle = folder.replace(/-/g, ' ').toUpperCase();
+            const albumId = `album${index + 1}`;
+            const itemClass = `item-${(index % 5) + 1}`;
 
-        const imgTags = processedImages.map(data => 
-            `<img src="images/${folder}/${data.file}" data-tag="${data.date} • ${data.tag}" data-cap="${data.caption}">`
-        ).join('\n');
+            const imgTags = processedImages.map(data => 
+                `<img src="images/${folder}/${data.file}" data-tag="${data.date} • ${data.tag}" data-cap="${data.caption}">`
+            ).join('\n');
 
-        htmlInjection += `
-        <div class="album-trigger ${itemClass}" onclick="openCinema('${albumId}')">
-            <img src="images/${folder}/${processedImages[0].file}">
-            <div class="trigger-info">
-                <span>PROJECT 0${index + 1}</span>
-                <h3>${albumTitle}</h3>
-            </div>
-            <div id="${albumId}-data" style="display:none;">
-                <div class="imgs">${imgTags}</div>
-            </div>
-        </div>`;
+            htmlInjection += `
+            <div class="album-trigger ${itemClass}" onclick="openCinema('${albumId}')">
+                <img src="images/${folder}/${processedImages[0].file}">
+                <div class="trigger-info">
+                    <span>PROJECT 0${index + 1}</span>
+                    <h3>${galleryTitle}</h3>
+                </div>
+                <div id="${albumId}-data" style="display:none;">
+                    <div class="imgs">${imgTags}</div>
+                </div>
+            </div>`;
+        }
     }
 
-    // CRITICAL: This regex targets the MAIN tag which is below your header
     const result = template.replace(
         /<main class="archive-float">([\s\S]*?)<\/main>/,
         `<main class="archive-float">\n${htmlInjection}\n</main>`
     );
 
     fs.writeFileSync(OUTPUT_FILE, result);
-    console.log(`Success! Generated ${OUTPUT_FILE}`);
+    console.log(`Successfully built anthology with ${htmlInjection.split('album-trigger').length - 1} galleries.`);
+}
+
+function generateMetaData(fileName) {
+    const nameClean = fileName.replace('.webp', "");
+    const parts = nameClean.split('-'); 
+    return {
+        file: fileName,
+        date: parts[0] || "2026",
+        tag: parts[1] || "Project",
+        caption: parts.slice(2).join(' ') || "Visual Archive"
+    };
 }
 
 build();

@@ -83,7 +83,7 @@ async function build() {
         if (processedImages && processedImages.length > 0) {
             const galleryTitle = folder.replace(/-/g, ' ').toUpperCase();
             const albumId = `album${index + 1}`;
-            const itemClass = `item-${(index % 5) + 1}`;
+            const itemClass = `item-${(index % 15) + 1}`;
 
             const imgTags = processedImages.map(data => 
                 `<img src="images/${folder}/${data.file}" data-tag="${data.date} • ${data.tag}" data-cap="${data.caption}">`

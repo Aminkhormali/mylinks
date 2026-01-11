@@ -9,14 +9,16 @@
 
     <style>
         :root {
-            --accent: #D4AF37;
-            --accent-bright: #F9D423;
-            --bg: #010811;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(212, 175, 55, 0.2);
-            --navy-deep: #0A192F;
-            --shadow-lux: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
-        }
+                --glass: rgba(10, 25, 47, 0.7); 
+                --border: rgba(212, 175, 55, 0.3);
+                --text-dark: #FFFFFF;
+                --text-muted: #cbd5e1;
+                /* UPDATED BACKGROUND COLORS */
+                --royal-blue: #010811;  
+                --deep-navy: #020c1b;
+                --gold-bright: #F9D423;
+                --gold-metallic: #D4AF37;
+            }
 
 
 
@@ -26,8 +28,15 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
-        body { background-color: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-
+        body {
+                /* UPDATED GRADIENT FOR A RICHER LOOK */
+                background: linear-gradient(160deg, #010811 0%, #050a14 100%);
+                background-attachment: fixed;
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                color: var(--text-dark);
+                overflow-x: hidden;
+                min-height: 100vh;
+            }
         .bg-mesh {
             position: fixed; inset: 0; z-index: -1;
             background: radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
@@ -81,9 +90,7 @@
         .item-15 { grid-column: span 6; height: 350px; --float-time: 15s; }
 
 
-
         
-
 
 
         @keyframes float-slow {
@@ -106,7 +113,18 @@
         }
 
 
-
+        .ambient-canvas { position: fixed; inset: 0; z-index: -1; }
+                    .liquid-blob {
+                        position: absolute;
+                        width: 80vw; height: 80vw;
+                        background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+                        filter: blur(120px);
+                        border-radius: 50%;
+                        animation: drift 20s infinite alternate ease-in-out;
+                    }
+                    @keyframes drift { from { transform: translate(-10%, -10%); } to { transform: translate(10%, 10%); } }
+                        
+        
 
 
 

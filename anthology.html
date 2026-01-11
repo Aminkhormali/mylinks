@@ -1,4 +1,9 @@
+
 <!DOCTYPE html>
+
+
+
+
 
 
 
@@ -6,63 +11,59 @@
 
 
 
+
+
+
+
 <head>
 
 
 
-    <meta charset="UTF-8">
 
 
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta charset="UTF-8">
 
 
-    <title>Portfolio || Aminollah Khormali, Ph.D.</title>
 
 
 
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
 
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
 
 
 
-        :root {
 
 
 
-            --accent: #D4AF37;
+    <title>Portfolio || Aminollah Khormali, Ph.D.</title>
 
 
 
-            --accent-bright: #F9D423;
 
 
 
-            --bg: #010811;
 
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
 
 
-            --glass: rgba(255, 255, 255, 0.03);
 
 
 
-            --border: rgba(212, 175, 55, 0.2);
 
 
+    <style>
 
-            --navy-deep: #0A192F;
 
 
 
-            --shadow-lux: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
 
 
 
-        }
+        :root {
 
 
 
@@ -70,71 +71,65 @@
 
 
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+            --accent: #D4AF37;
 
 
 
-        body { background-color: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
 
 
 
 
+            --accent-bright: #F9D423;
 
 
 
-        .bg-mesh {
 
 
 
-            position: fixed; inset: 0; z-index: -1;
 
+            --bg: #010811;
 
 
-            background: radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
 
 
 
-        }
 
 
+            --glass: rgba(255, 255, 255, 0.03);
 
 
 
 
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 80px 5vw; }
 
 
+            --border: rgba(212, 175, 55, 0.2);
 
 
 
 
 
-        /* --- VARYING SIZE FLOATING GRID --- */
 
 
+            --navy-deep: #0A192F;
 
-        .archive-float { 
 
 
 
-            display: grid; 
 
 
 
-            grid-template-columns: repeat(6, 1fr); 
+            --shadow-lux: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
 
 
 
-            gap: 40px; 
 
 
 
-            margin-top: 60px; 
 
+        }
 
 
-        }
 
 
 
@@ -142,387 +137,341 @@
 
 
 
-        .album-trigger { 
 
 
 
-            position: relative; 
 
 
 
-            background: #000; 
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
 
 
 
-            border: 1px solid var(--border); 
 
 
 
-            border-radius: 20px;
 
+        body { background-color: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
 
 
-            overflow: hidden; 
 
 
 
-            transition: 1s cubic-bezier(0.19, 1, 0.22, 1);
 
 
 
-            animation: float-slow var(--float-time) infinite ease-in-out;
 
 
 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 
 
 
-        }
 
+        .bg-mesh {
 
 
 
 
-                /* 15 Unique Item Placements */
 
-        .item-1 { grid-column: span 3; height: 500px; --float-time: 7s; }
 
-        .item-2 { grid-column: span 3; height: 420px; margin-top: 80px; --float-time: 9s; }
 
-        .item-3 { grid-column: span 2; height: 380px; --float-time: 8s; }
+            position: fixed; inset: 0; z-index: -1;
 
-        .item-4 { grid-column: span 4; height: 480px; margin-top: -60px; --float-time: 10s; }
 
-        .item-5 { grid-column: span 6; height: 320px; --float-time: 12s; }
 
-        .item-6 { grid-column: span 3; height: 550px; --float-time: 11s; }
 
-        .item-7 { grid-column: span 3; height: 550px; margin-top: -40px; --float-time: 13s; }
 
-        .item-8 { grid-column: span 2; height: 400px; --float-time: 6s; }
 
-        .item-9 { grid-column: span 2; height: 400px; --float-time: 8.5s; }
 
-        .item-10 { grid-column: span 2; height: 400px; --float-time: 7.5s; }
+            background: radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
 
-        .item-11 { grid-column: span 4; height: 500px; --float-time: 14s; }
 
-        .item-12 { grid-column: span 2; height: 450px; margin-top: 50px; --float-time: 9.5s; }
 
-        .item-13 { grid-column: span 3; height: 400px; --float-time: 11.5s; }
 
-        .item-14 { grid-column: span 3; height: 400px; --float-time: 10.5s; }
 
-        .item-15 { grid-column: span 6; height: 350px; --float-time: 15s; }
 
 
+        }
 
-        
 
 
 
-        @keyframes float-slow {
 
 
 
-            0%, 100% { transform: translateY(0) rotate(0deg); }
 
 
 
-            50% { transform: translateY(-20px) rotate(0.5deg); }
 
 
 
-        }
 
 
+        .container { max-width: 1400px; margin: 0 auto; padding: 80px 5vw; }
 
 
 
 
 
-        .album-trigger img { 
 
 
 
-            width: 100%; height: 100%; 
 
 
 
-            object-fit: cover; 
 
 
 
-            filter: brightness(0.6) contrast(1.1); 
 
+        /* --- VARYING SIZE FLOATING GRID --- */
 
 
-            transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
 
 
 
-        }
 
 
+        .archive-float { 
 
 
 
 
 
-        .album-trigger:hover { 
 
 
+            display: grid; 
 
-            border-color: var(--accent); 
 
 
 
-            z-index: 50; 
 
 
 
-            transform: scale(1.04) translateY(-15px) !important; 
+            grid-template-columns: repeat(6, 1fr); 
 
 
 
-            box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.1);
 
 
 
-        }
 
+            gap: 40px; 
 
 
 
 
 
 
-        .album-trigger:hover img { filter: brightness(1) contrast(1); transform: scale(1.1); }
 
+            margin-top: 60px; 
 
 
 
 
 
 
-        .trigger-info { 
 
+        }
 
 
-            position: absolute; bottom: 0; left: 0; right: 0;
 
 
 
-            padding: 40px 30px;
 
 
 
-            background: linear-gradient(to top, rgba(1, 8, 17, 0.9) 0%, transparent 100%);
 
 
 
-            pointer-events: none; z-index: 2; 
 
 
 
-        }
 
+        .album-trigger { 
 
 
 
 
 
 
-        .trigger-info span { 
 
+            position: relative; 
 
 
-            display: block; font-size: 9px; color: var(--accent); 
 
 
 
-            letter-spacing: 4px; text-transform: uppercase; font-weight: 700;
 
 
+            background: #000; 
 
-            transform: translateY(10px); opacity: 0.8; transition: 0.5s ease;
 
 
 
-        }
 
 
 
+            border: 1px solid var(--border); 
 
 
 
 
-        .trigger-info h3 { 
 
 
 
-            font-family: 'Playfair Display', serif; font-size: 28px; 
+            border-radius: 20px;
 
 
 
-            font-weight: 400; font-style: italic; margin-top: 5px;
 
 
 
-        }
 
+            overflow: hidden; 
 
 
 
 
 
 
-        .album-trigger:hover .trigger-info span { transform: translateY(0); opacity: 1; }
 
+            transition: 1s cubic-bezier(0.19, 1, 0.22, 1);
 
 
-        .album-trigger:hover .trigger-info h3 { color: var(--accent-bright); }
 
 
 
 
 
+            animation: float-slow var(--float-time) infinite ease-in-out;
 
 
-        /* --- 3D CINEMA STAGE --- */
 
 
 
-        .cinema-overlay {
 
 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 
-            position: fixed; inset: 0; 
 
 
 
-            background: radial-gradient(circle at center, #0a192f 0%, #000 100%);
 
 
 
-            z-index: 2000; visibility: hidden; opacity: 0; 
+        }
 
 
 
-            display: flex; flex-direction: column; 
 
 
 
-            transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
 
 
 
-            perspective: 2000px; 
 
 
+                /* 15 Unique Item Placements */
 
-        }
 
 
+        .item-1 { grid-column: span 3; height: 500px; --float-time: 7s; }
 
-        .cinema-overlay.active { visibility: visible; opacity: 1; }
 
 
+        .item-2 { grid-column: span 3; height: 420px; margin-top: 80px; --float-time: 9s; }
 
 
 
+        .item-3 { grid-column: span 2; height: 380px; --float-time: 8s; }
 
 
-        .cinema-header { padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 2100; flex-shrink: 0; }
 
+        .item-4 { grid-column: span 4; height: 480px; margin-top: -60px; --float-time: 10s; }
 
 
-        .close-cinema { color: var(--accent); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border-bottom: 1px solid var(--accent); }
 
+        .item-5 { grid-column: span 6; height: 320px; --float-time: 12s; }
 
 
 
+        .item-6 { grid-column: span 3; height: 200px; --float-time: 11s; }
 
 
 
-        .stage-3d { 
+        .item-7 { grid-column: span 3; height: 550px; margin-top: -40px; --float-time: 13s; }
 
 
 
-            flex: 1; 
+        .item-8 { grid-column: span 2; height: 400px; --float-time: 6s; }
 
 
 
-            position: relative; width: 100%; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; 
+        .item-9 { grid-column: span 2; height: 400px; --float-time: 8.5s; }
 
 
 
-            overflow: hidden; /* THIS ENSURES ONLY ONE IMAGE IS VISIBLE AT A TIME */
+        .item-10 { grid-column: span 2; height: 400px; --float-time: 7.5s; }
 
 
 
-        }
+        .item-11 { grid-column: span 4; height: 500px; --float-time: 14s; }
 
 
 
-        .cylinder { position: relative; width: 50vw; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
+        .item-12 { grid-column: span 2; height: 450px; margin-top: 50px; --float-time: 9.5s; }
 
 
 
-        .slide-3d { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; backface-visibility: hidden; transition: 1s; }
+        .item-13 { grid-column: span 3; height: 400px; --float-time: 11.5s; }
 
 
 
+        .item-14 { grid-column: span 3; height: 400px; --float-time: 10.5s; }
 
 
 
+        .item-15 { grid-column: span 6; height: 350px; --float-time: 15s; }
 
-        .img-wrapper-3d {
 
 
 
-            position: relative; line-height: 0;
 
 
 
-            box-shadow: 0 30px 100px rgba(0,0,0,0.8);
+        
 
 
 
-            -webkit-box-reflect: below 15px linear-gradient(transparent, transparent 60%, rgba(255,255,255,0.1));
 
 
 
-        }
 
+        @keyframes float-slow {
 
 
 
 
 
 
-        .img-wrapper-3d img { 
 
+            0%, 100% { transform: translateY(0) rotate(0deg); }
 
 
-            max-width: 60vw; 
 
 
 
-            max-height: 45vh; 
 
 
+            50% { transform: translateY(-20px) rotate(0.5deg); }
 
-            width: auto; height: auto; 
 
 
 
-            border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; 
 
 
 
-        }
+        }
 
 
 
@@ -530,71 +479,62 @@
 
 
 
-        .tag-3d { 
 
 
 
-            position: absolute; top: 20px; left: 20px; 
 
 
 
-            font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; 
 
 
+        .album-trigger img { 
 
-            color: var(--accent-bright); opacity: 0; transition: 0.5s 0.8s; 
 
 
 
-        }
 
 
 
+            width: 100%; height: 100%; 
 
 
 
 
-        .cap-3d { 
 
 
 
-            position: absolute; bottom: 20px; left: 20px; right: 20px; 
+            object-fit: cover; 
 
 
 
-            font-size: 14px; background: rgba(0,0,0,0.6); 
 
 
 
-            padding: 12px 20px; border-radius: 4px; 
 
+            filter: brightness(0.6) contrast(1.1); 
 
 
-            opacity: 0; transition: 0.5s 0.8s; 
 
 
 
-            border-left: 3px solid var(--accent-bright); 
 
 
+            transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
 
-            line-height: 1.5; backdrop-filter: blur(10px); text-align: left;
 
 
 
-        }
 
 
 
+        }
 
 
 
 
-        .active-slide .tag-3d, .active-slide .cap-3d { opacity: 1; }
 
 
 
-        .slide-3d:not(.active-slide) { filter: blur(10px) brightness(0.2) scale(0.8); opacity: 0; } /* ADDED OPACITY 0 FOR NON-ACTIVE SLIDES */
 
 
 
@@ -602,59 +542,780 @@
 
 
 
-        .cinema-nav { 
 
+        .album-trigger:hover { 
 
 
-            padding: 40px 0; 
 
 
 
-            display: flex; gap: 20px; justify-content: center; z-index: 2100; 
 
 
+            border-color: var(--accent); 
 
-            flex-shrink: 0; 
 
 
 
-        }
 
 
 
-        .nav-link { background: none; border: 1px solid var(--border); color: #fff; padding: 12px 30px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-radius: 30px; cursor: pointer; transition: 0.4s; }
+            z-index: 50; 
 
 
 
-        .nav-link:hover { border-color: var(--accent); background: rgba(212, 175, 55, 0.1); }
 
 
 
 
+            transform: scale(1.04) translateY(-15px) !important; 
 
 
 
-        @media (max-width: 900px) {
 
 
 
-            .archive-float { grid-template-columns: 1fr; }
 
+            box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.1);
 
 
-            .item-1, .item-2, .item-3, .item-4, .item-5, .item-6, .item-7, .item-8, .item-9, .item-10, .item-11, .item-12, .item-13, .item-14, .item-15 { grid-column: span 1; height: 350px; margin: 0 !important; }
 
 
 
-            .img-wrapper-3d img { max-width: 80vw; max-height: 40vh; }
 
 
+        }
 
-        }
 
 
 
-    </style>
+
+
+
+
+
+
+
+
+
+
+
+        .album-trigger:hover img { filter: brightness(1) contrast(1); transform: scale(1.1); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .trigger-info { 
+
+
+
+
+
+
+
+            position: absolute; bottom: 0; left: 0; right: 0;
+
+
+
+
+
+
+
+            padding: 40px 30px;
+
+
+
+
+
+
+
+            background: linear-gradient(to top, rgba(1, 8, 17, 0.9) 0%, transparent 100%);
+
+
+
+
+
+
+
+            pointer-events: none; z-index: 2; 
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .trigger-info span { 
+
+
+
+
+
+
+
+            display: block; font-size: 9px; color: var(--accent); 
+
+
+
+
+
+
+
+            letter-spacing: 4px; text-transform: uppercase; font-weight: 700;
+
+
+
+
+
+
+
+            transform: translateY(10px); opacity: 0.8; transition: 0.5s ease;
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .trigger-info h3 { 
+
+
+
+
+
+
+
+            font-family: 'Playfair Display', serif; font-size: 28px; 
+
+
+
+
+
+
+
+            font-weight: 400; font-style: italic; margin-top: 5px;
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .album-trigger:hover .trigger-info span { transform: translateY(0); opacity: 1; }
+
+
+
+
+
+
+
+        .album-trigger:hover .trigger-info h3 { color: var(--accent-bright); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /* --- 3D CINEMA STAGE --- */
+
+
+
+
+
+
+
+        .cinema-overlay {
+
+
+
+
+
+
+
+            position: fixed; inset: 0; 
+
+
+
+
+
+
+
+            background: radial-gradient(circle at center, #0a192f 0%, #000 100%);
+
+
+
+
+
+
+
+            z-index: 2000; visibility: hidden; opacity: 0; 
+
+
+
+
+
+
+
+            display: flex; flex-direction: column; 
+
+
+
+
+
+
+
+            transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+
+
+
+
+
+
+
+            perspective: 2000px; 
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+        .cinema-overlay.active { visibility: visible; opacity: 1; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .cinema-header { padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 2100; flex-shrink: 0; }
+
+
+
+
+
+
+
+        .close-cinema { color: var(--accent); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border-bottom: 1px solid var(--accent); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .stage-3d { 
+
+
+
+
+
+
+
+            flex: 1; 
+
+
+
+
+
+
+
+            position: relative; width: 100%; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; 
+
+
+
+
+
+
+
+            overflow: hidden; /* THIS ENSURES ONLY ONE IMAGE IS VISIBLE AT A TIME */
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+        .cylinder { position: relative; width: 50vw; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
+
+
+
+
+
+
+
+        .slide-3d { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; backface-visibility: hidden; transition: 1s; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .img-wrapper-3d {
+
+
+
+
+
+
+
+            position: relative; line-height: 0;
+
+
+
+
+
+
+
+            box-shadow: 0 30px 100px rgba(0,0,0,0.8);
+
+
+
+
+
+
+
+            -webkit-box-reflect: below 15px linear-gradient(transparent, transparent 60%, rgba(255,255,255,0.1));
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .img-wrapper-3d img { 
+
+
+
+
+
+
+
+            max-width: 60vw; 
+
+
+
+
+
+
+
+            max-height: 45vh; 
+
+
+
+
+
+
+
+            width: auto; height: auto; 
+
+
+
+
+
+
+
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; 
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .tag-3d { 
+
+
+
+
+
+
+
+            position: absolute; top: 20px; left: 20px; 
+
+
+
+
+
+
+
+            font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; 
+
+
+
+
+
+
+
+            color: var(--accent-bright); opacity: 0; transition: 0.5s 0.8s; 
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .cap-3d { 
+
+
+
+
+
+
+
+            position: absolute; bottom: 20px; left: 20px; right: 20px; 
+
+
+
+
+
+
+
+            font-size: 14px; background: rgba(0,0,0,0.6); 
+
+
+
+
+
+
+
+            padding: 12px 20px; border-radius: 4px; 
+
+
+
+
+
+
+
+            opacity: 0; transition: 0.5s 0.8s; 
+
+
+
+
+
+
+
+            border-left: 3px solid var(--accent-bright); 
+
+
+
+
+
+
+
+            line-height: 1.5; backdrop-filter: blur(10px); text-align: left;
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .active-slide .tag-3d, .active-slide .cap-3d { opacity: 1; }
+
+
+
+
+
+
+
+        .slide-3d:not(.active-slide) { filter: blur(10px) brightness(0.2) scale(0.8); opacity: 0; } /* ADDED OPACITY 0 FOR NON-ACTIVE SLIDES */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        .cinema-nav { 
+
+
+
+
+
+
+
+            padding: 40px 0; 
+
+
+
+
+
+
+
+            display: flex; gap: 20px; justify-content: center; z-index: 2100; 
+
+
+
+
+
+
+
+            flex-shrink: 0; 
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+        .nav-link { background: none; border: 1px solid var(--border); color: #fff; padding: 12px 30px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-radius: 30px; cursor: pointer; transition: 0.4s; }
+
+
+
+
+
+
+
+        .nav-link:hover { border-color: var(--accent); background: rgba(212, 175, 55, 0.1); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        @media (max-width: 900px) {
+
+
+
+
+
+
+
+            .archive-float { grid-template-columns: 1fr; }
+
+
+
+
+
+
+
+            .item-1, .item-2, .item-3, .item-4, .item-5, .item-6, .item-7, .item-8, .item-9, .item-10, .item-11, .item-12, .item-13, .item-14, .item-15 { grid-column: span 1; height: 350px; margin: 0 !important; }
+
+
+
+
+
+
+
+            .img-wrapper-3d img { max-width: 80vw; max-height: 40vh; }
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+    </style>
+
+
+
+
 
 
 
@@ -662,7 +1323,19 @@
 
 
 
+
+
+
+
 <body>
+
+
+
+
+
+
+
+
 
 
 
@@ -678,26 +1351,55 @@
 
 
 
+
+
+
+
+
+
+
+
 <div class="container">
 
 
 
-    <header>
 
 
 
-        <a href="index.html" class="back-btn" style="text-decoration: none; color: var(--accent); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: bold;">← Departure</a>
+
+    <header>
 
 
 
-<h1 style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; margin-top: 20px; font-size: clamp(30px, 6vw, 60px);">Our <i>Smile Stories</i></h1>
-
-
-    </header>
 
 
 
-    <main class="archive-float">
+
+        <a href="index.html" class="back-btn" style="text-decoration: none; color: var(--accent); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: bold;">← Departure</a>
+
+
+
+
+
+
+
+        <h1 style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; margin-top: 20px; font-size: clamp(30px, 6vw, 60px);">Visual <i>Anthology</i></h1>
+
+
+
+
+
+
+
+    </header>
+
+
+
+
+
+
+
+    <main class="archive-float">
 
             <div class="album-trigger item-1" onclick="openCinema('album1')">
                 <img src="images/2027-UNC/2022-Orlando-IMG_1188.webp">
@@ -837,7 +1539,19 @@
 
 
 
+
+
+
+
 </div>
+
+
+
+
+
+
+
+
 
 
 
@@ -849,47 +1563,95 @@
 
 
 
-    <div class="cinema-header">
 
 
 
-        <h2 id="cTitle" style="font-family: 'Playfair Display'; font-style: italic; color: var(--accent); font-size: 2rem;">Studio</h2>
+
+    <div class="cinema-header">
 
 
 
-        <div class="close-cinema" onclick="closeCinema()">Exit Studio</div>
 
 
 
-    </div>
+
+        <h2 id="cTitle" style="font-family: 'Playfair Display'; font-style: italic; color: var(--accent); font-size: 2rem;">Studio</h2>
 
 
 
-    <div class="stage-3d">
 
 
 
-        <div class="cylinder" id="cylinder"></div>
+
+        <div class="close-cinema" onclick="closeCinema()">Exit Studio</div>
 
 
 
-    </div>
 
 
 
-    <div class="cinema-nav">
+
+    </div>
 
 
 
-        <button class="nav-link" onclick="manualNav('prev')">Prev</button>
 
 
 
-        <button class="nav-link" onclick="manualNav('next')">Next</button>
+
+    <div class="stage-3d">
 
 
 
-    </div>
+
+
+
+
+        <div class="cylinder" id="cylinder"></div>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+    <div class="cinema-nav">
+
+
+
+
+
+
+
+        <button class="nav-link" onclick="manualNav('prev')">Prev</button>
+
+
+
+
+
+
+
+        <button class="nav-link" onclick="manualNav('next')">Next</button>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
 
 
 
@@ -901,43 +1663,46 @@
 
 
 
+
+
+
+
+
+
+
+
 <script>
 
 
 
-    const cylinder = document.getElementById('cylinder');
 
 
 
-    const overlay = document.getElementById('cinemaOverlay');
 
+    const cylinder = document.getElementById('cylinder');
 
 
-    let rotation = 0, autoTimer, currentIndex = 0, totalSlides = 0;
 
 
 
 
 
+    const overlay = document.getElementById('cinemaOverlay');
 
 
-    function overlayClose(e) {
 
 
 
-        if (e.target.id === 'cinemaOverlay' || e.target.classList.contains('stage-3d')) {
 
 
+    let rotation = 0, autoTimer, currentIndex = 0, totalSlides = 0;
 
-            closeCinema();
 
 
 
-        }
 
 
 
-    }
 
 
 
@@ -945,119 +1710,104 @@
 
 
 
-    function openCinema(id) {
 
+    function overlayClose(e) {
 
 
-        const data = document.getElementById(id + '-data');
 
 
 
-        if(!data) return alert("Gallery content coming soon.");
 
 
+        if (e.target.id === 'cinemaOverlay' || e.target.classList.contains('stage-3d')) {
 
-        const imgs = data.querySelector('.imgs').querySelectorAll('img');
 
 
 
-        totalSlides = imgs.length;
 
 
 
-        currentIndex = 0; rotation = 0;
+            closeCinema();
 
 
 
-        document.getElementById('cTitle').innerText = id.toUpperCase().replace('ALBUM', 'ARCHIVE ');
 
 
 
-        cylinder.innerHTML = '';
 
+        }
 
 
-        cylinder.style.transform = `rotateY(0deg)`;
 
 
 
-        const radius = Math.max(window.innerWidth * 0.35, 400);
 
 
+    }
 
 
 
 
 
-        imgs.forEach((img, i) => {
 
 
 
-            const slide = document.createElement('div');
 
 
 
-            slide.className = 'slide-3d' + (i === 0 ? ' active-slide' : '');
 
 
 
-            const angleStep = 360 / totalSlides;
 
+    function openCinema(id) {
 
 
-            slide.style.transform = `rotateY(${i * angleStep}deg) translateZ(${totalSlides === 1 ? 0 : radius}px)`;
 
 
 
-            slide.innerHTML = `
 
 
+        const data = document.getElementById(id + '-data');
 
-                <div class="img-wrapper-3d" onclick="event.stopPropagation()">
 
 
 
-                    <img src="${img.src}">
 
 
 
-                    <div class="tag-3d">${img.getAttribute('data-tag') || 'COLLECTION'}</div>
+        if(!data) return alert("Gallery content coming soon.");
 
 
 
-                    <div class="cap-3d">${img.getAttribute('data-cap') || ''}</div>
 
 
 
-                </div>`;
 
+        const imgs = data.querySelector('.imgs').querySelectorAll('img');
 
 
-            cylinder.appendChild(slide);
 
 
 
-        });
 
 
+        totalSlides = imgs.length;
 
 
 
 
 
-        overlay.classList.add('active');
 
 
+        currentIndex = 0; rotation = 0;
 
-        document.body.style.overflow = 'hidden';
 
 
 
-        startRotation();
 
 
 
-    }
+        document.getElementById('cTitle').innerText = id.toUpperCase().replace('ALBUM', 'ARCHIVE ');
 
 
 
@@ -1065,35 +1815,30 @@
 
 
 
-    function rotateCylinder(dir) {
+        cylinder.innerHTML = '';
 
 
 
-        if(totalSlides <= 1) return;
 
 
 
-        const angleStep = 360 / totalSlides;
 
+        cylinder.style.transform = `rotateY(0deg)`;
 
 
-        dir === 'next' ? (rotation -= angleStep, currentIndex = (currentIndex + 1) % totalSlides) 
 
 
 
-                       : (rotation += angleStep, currentIndex = (currentIndex - 1 + totalSlides) % totalSlides);
 
 
+        const radius = Math.max(window.innerWidth * 0.35, 400);
 
-        cylinder.style.transform = `rotateY(${rotation}deg)`;
 
 
 
-        document.querySelectorAll('.slide-3d').forEach((s, i) => { s.classList.toggle('active-slide', i === currentIndex); });
 
 
 
-    }
 
 
 
@@ -1101,15 +1846,252 @@
 
 
 
-    function startRotation() { clearInterval(autoTimer); if(totalSlides > 1) autoTimer = setInterval(() => rotateCylinder('next'), 5000); }
 
+        imgs.forEach((img, i) => {
 
 
-    function manualNav(dir) { rotateCylinder(dir); startRotation(); }
 
 
 
-    function closeCinema() { overlay.classList.remove('active'); document.body.style.overflow = 'auto'; clearInterval(autoTimer); }
+
+
+            const slide = document.createElement('div');
+
+
+
+
+
+
+
+            slide.className = 'slide-3d' + (i === 0 ? ' active-slide' : '');
+
+
+
+
+
+
+
+            const angleStep = 360 / totalSlides;
+
+
+
+
+
+
+
+            slide.style.transform = `rotateY(${i * angleStep}deg) translateZ(${totalSlides === 1 ? 0 : radius}px)`;
+
+
+
+
+
+
+
+            slide.innerHTML = `
+
+
+
+
+
+
+
+                <div class="img-wrapper-3d" onclick="event.stopPropagation()">
+
+
+
+
+
+
+
+                    <img src="${img.src}">
+
+
+
+
+
+
+
+                    <div class="tag-3d">${img.getAttribute('data-tag') || 'COLLECTION'}</div>
+
+
+
+
+
+
+
+                    <div class="cap-3d">${img.getAttribute('data-cap') || ''}</div>
+
+
+
+
+
+
+
+                </div>`;
+
+
+
+
+
+
+
+            cylinder.appendChild(slide);
+
+
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        overlay.classList.add('active');
+
+
+
+
+
+
+
+        document.body.style.overflow = 'hidden';
+
+
+
+
+
+
+
+        startRotation();
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function rotateCylinder(dir) {
+
+
+
+
+
+
+
+        if(totalSlides <= 1) return;
+
+
+
+
+
+
+
+        const angleStep = 360 / totalSlides;
+
+
+
+
+
+
+
+        dir === 'next' ? (rotation -= angleStep, currentIndex = (currentIndex + 1) % totalSlides) 
+
+
+
+
+
+
+
+                       : (rotation += angleStep, currentIndex = (currentIndex - 1 + totalSlides) % totalSlides);
+
+
+
+
+
+
+
+        cylinder.style.transform = `rotateY(${rotation}deg)`;
+
+
+
+
+
+
+
+        document.querySelectorAll('.slide-3d').forEach((s, i) => { s.classList.toggle('active-slide', i === currentIndex); });
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function startRotation() { clearInterval(autoTimer); if(totalSlides > 1) autoTimer = setInterval(() => rotateCylinder('next'), 5000); }
+
+
+
+
+
+
+
+    function manualNav(dir) { rotateCylinder(dir); startRotation(); }
+
+
+
+
+
+
+
+    function closeCinema() { overlay.classList.remove('active'); document.body.style.overflow = 'auto'; clearInterval(autoTimer); }
+
+
+
+
 
 
 
@@ -1121,7 +2103,19 @@
 
 
 
+
+
+
+
+
+
+
+
 </body>
+
+
+
+
 
 
 

@@ -98,36 +98,20 @@
             position: fixed; inset: 0; 
             background: radial-gradient(circle at center, #0a192f 0%, #000 100%);
             z-index: 2000; visibility: hidden; opacity: 0; 
-            display: flex; 
-            flex-direction: column; /* FORCES VERTICAL STACKING */
+            display: flex; flex-direction: column; /* VERTICAL STACKING */
             transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
             perspective: 2000px; 
         }
         .cinema-overlay.active { visibility: visible; opacity: 1; }
-        
-        .cinema-header { 
-            padding: 30px 60px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            z-index: 2100;
-            height: 12vh;
-        }
+
+        .cinema-header { padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 2100; flex-shrink: 0; }
         .close-cinema { color: var(--accent); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border-bottom: 1px solid var(--accent); }
 
         .stage-3d { 
-            flex: 1; /* EXPANDS TO FILL MIDDLE SPACE */
-            position: relative; width: 100%; 
-            display: flex; align-items: center; justify-content: center; 
-            transform-style: preserve-3d; 
+            flex: 1; /* EXPANDS TO TAKE UP MIDDLE SPACE */
+            position: relative; width: 100%; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; 
         }
-        
-        .cylinder { 
-            position: relative; 
-            width: 50vw; 
-            height: 100%; /* FOLLOWS STAGE-3D HEIGHT */
-            transform-style: preserve-3d; 
-            transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); 
-        }
-        
+        .cylinder { position: relative; width: 50vw; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
         .slide-3d { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; backface-visibility: hidden; transition: 1s; }
 
         .img-wrapper-3d {
@@ -135,14 +119,13 @@
             box-shadow: 0 30px 100px rgba(0,0,0,0.8);
             -webkit-box-reflect: below 15px linear-gradient(transparent, transparent 60%, rgba(255,255,255,0.1));
         }
-        
-        /* IMAGE CONSTRAINTS: Keeps images from ever touching the buttons */
+
+        /* IMAGE CONSTRAINTS: Ensures image never expands into the button area */
         .img-wrapper-3d img { 
             max-width: 60vw; 
-            max-height: 45vh; 
+            max-height: 45vh; /* Restricted height for clear separation */
             width: auto; height: auto; 
-            border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 4px; 
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; 
         }
 
         .tag-3d { 
@@ -157,24 +140,19 @@
             padding: 12px 20px; border-radius: 4px; 
             opacity: 0; transition: 0.5s 0.8s; 
             border-left: 3px solid var(--accent-bright); 
-            line-height: 1.5;
-            backdrop-filter: blur(10px);
-            text-align: left;
+            line-height: 1.5; backdrop-filter: blur(10px); text-align: left;
         }
 
         .active-slide .tag-3d, .active-slide .cap-3d { opacity: 1; }
         .slide-3d:not(.active-slide) { filter: blur(10px) brightness(0.2) scale(0.8); }
 
-        /* NAVIGATION SECTION: Occupies its own vertical block at the bottom */
+        /* BUTTONS AREA: Forced to the bottom with vertical space */
         .cinema-nav { 
-            padding-bottom: 5vh; 
-            padding-top: 20px;
-            display: flex; gap: 20px; justify-content: center; 
-            z-index: 2100; 
-            height: 15vh;
+            padding: 40px 0; 
+            display: flex; gap: 20px; justify-content: center; z-index: 2100; 
+            flex-shrink: 0; 
         }
-        
-        .nav-link { background: none; border: 1px solid var(--border); color: #fff; padding: 12px 40px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-radius: 30px; cursor: pointer; transition: 0.4s; }
+        .nav-link { background: none; border: 1px solid var(--border); color: #fff; padding: 12px 30px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-radius: 30px; cursor: pointer; transition: 0.4s; }
         .nav-link:hover { border-color: var(--accent); background: rgba(212, 175, 55, 0.1); }
 
         @media (max-width: 900px) {
@@ -193,7 +171,6 @@
         <a href="index.html" class="back-btn" style="text-decoration: none; color: var(--accent); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: bold;">← Departure</a>
         <h1 style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; margin-top: 20px; font-size: clamp(30px, 6vw, 60px);">Visual <i>Anthology</i></h1>
     </header>
-
     <main class="archive-float">
 
             <div class="album-trigger item-1" onclick="openCinema('album1')">
@@ -281,26 +258,31 @@
 </main>
 </div>
 
-<div class="cinema-overlay" id="cinemaOverlay">
+<div class="cinema-overlay" id="cinemaOverlay" onclick="overlayClose(event)">
     <div class="cinema-header">
         <h2 id="cTitle" style="font-family: 'Playfair Display'; font-style: italic; color: var(--accent); font-size: 2rem;">Studio</h2>
         <div class="close-cinema" onclick="closeCinema()">Exit Studio</div>
     </div>
-    
     <div class="stage-3d">
         <div class="cylinder" id="cylinder"></div>
     </div>
-    
     <div class="cinema-nav">
         <button class="nav-link" onclick="manualNav('prev')">Prev</button>
         <button class="nav-link" onclick="manualNav('next')">Next</button>
     </div>
 </div>
 
-<script src="builder.js"></script> <script>
+<script>
     const cylinder = document.getElementById('cylinder');
     const overlay = document.getElementById('cinemaOverlay');
     let rotation = 0, autoTimer, currentIndex = 0, totalSlides = 0;
+
+    // Capability to close when clicking outside the image
+    function overlayClose(e) {
+        if (e.target.id === 'cinemaOverlay' || e.target.classList.contains('stage-3d')) {
+            closeCinema();
+        }
+    }
 
     function openCinema(id) {
         const data = document.getElementById(id + '-data');
@@ -311,8 +293,6 @@
         document.getElementById('cTitle').innerText = id.toUpperCase().replace('ALBUM', 'ARCHIVE ');
         cylinder.innerHTML = '';
         cylinder.style.transform = `rotateY(0deg)`;
-        
-        // Dynamic radius based on viewport width
         const radius = Math.max(window.innerWidth * 0.35, 400);
 
         imgs.forEach((img, i) => {
@@ -321,7 +301,7 @@
             const angleStep = 360 / totalSlides;
             slide.style.transform = `rotateY(${i * angleStep}deg) translateZ(${totalSlides === 1 ? 0 : radius}px)`;
             slide.innerHTML = `
-                <div class="img-wrapper-3d">
+                <div class="img-wrapper-3d" onclick="event.stopPropagation()">
                     <img src="${img.src}">
                     <div class="tag-3d">${img.getAttribute('data-tag') || 'COLLECTION'}</div>
                     <div class="cap-3d">${img.getAttribute('data-cap') || ''}</div>
@@ -343,11 +323,7 @@
         document.querySelectorAll('.slide-3d').forEach((s, i) => { s.classList.toggle('active-slide', i === currentIndex); });
     }
 
-    function startRotation() { 
-        clearInterval(autoTimer); 
-        if(totalSlides > 1) autoTimer = setInterval(() => rotateCylinder('next'), 5000); 
-    }
-    
+    function startRotation() { clearInterval(autoTimer); if(totalSlides > 1) autoTimer = setInterval(() => rotateCylinder('next'), 5000); }
     function manualNav(dir) { rotateCylinder(dir); startRotation(); }
     function closeCinema() { overlay.classList.remove('active'); document.body.style.overflow = 'auto'; clearInterval(autoTimer); }
 </script>

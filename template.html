@@ -1,260 +1,492 @@
+
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Portfolio || Aminollah Khormali, Ph.D.</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;700&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+
     <style>
+
         :root {
+
             --accent: #D4AF37;
+
             --accent-bright: #F9D423;
+
             --bg: #010811;
+
             --glass: rgba(255, 255, 255, 0.03);
+
             --border: rgba(212, 175, 55, 0.2);
+
             --navy-deep: #0A192F;
+
             --shadow-lux: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
+
         }
+
+
 
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; }
+
         body { background-color: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
 
+
+
         .bg-mesh {
+
             position: fixed; inset: 0; z-index: -1;
+
             background: radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+
         }
+
+
 
         .container { max-width: 1400px; margin: 0 auto; padding: 80px 5vw; }
 
-        /* --- DYNAMIC FLOATING GRID --- */
+
+
+        /* --- VARYING SIZE FLOATING GRID --- */
+
         .archive-float { 
+
             display: grid; 
+
             grid-template-columns: repeat(6, 1fr); 
+
             gap: 40px; 
+
             margin-top: 60px; 
+
         }
+
+
 
         .album-trigger { 
+
             position: relative; 
+
             background: #000; 
+
             border: 1px solid var(--border); 
+
             border-radius: 20px;
+
             overflow: hidden; 
+
             transition: 1s cubic-bezier(0.19, 1, 0.22, 1);
+
             animation: float-slow var(--float-time) infinite ease-in-out;
+
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: block;
+
         }
+
+
+
+        .item-1 { grid-column: span 3; height: 500px; --float-time: 7s; }
+
+        .item-2 { grid-column: span 3; height: 420px; margin-top: 80px; --float-time: 9s; }
+
+        .item-3 { grid-column: span 2; height: 380px; --float-time: 8s; }
+
+        .item-4 { grid-column: span 4; height: 480px; margin-top: -60px; --float-time: 10s; }
+
+        .item-5 { grid-column: span 6; height: 320px; --float-time: 12s; }
+
         
+
         @keyframes float-slow {
+
             0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(0.3deg); }
+
+            50% { transform: translateY(-20px) rotate(0.5deg); }
+
         }
+
+
 
         .album-trigger img { 
+
             width: 100%; height: 100%; 
+
             object-fit: cover; 
+
             filter: brightness(0.6) contrast(1.1); 
+
             transition: 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
+
         }
 
+
+
         .album-trigger:hover { 
+
             border-color: var(--accent); 
+
             z-index: 50; 
-            transform: scale(1.04) translateY(-10px) !important; 
+
+            transform: scale(1.04) translateY(-15px) !important; 
+
             box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.1);
+
         }
+
+
 
         .album-trigger:hover img { filter: brightness(1) contrast(1); transform: scale(1.1); }
 
+
+
         .trigger-info { 
+
             position: absolute; bottom: 0; left: 0; right: 0;
+
             padding: 40px 30px;
+
             background: linear-gradient(to top, rgba(1, 8, 17, 0.9) 0%, transparent 100%);
+
             pointer-events: none; z-index: 2; 
+
         }
+
+
 
         .trigger-info span { 
+
             display: block; font-size: 9px; color: var(--accent); 
+
             letter-spacing: 4px; text-transform: uppercase; font-weight: 700;
+
             transform: translateY(10px); opacity: 0.8; transition: 0.5s ease;
+
         }
+
+
 
         .trigger-info h3 { 
-            font-family: 'Playfair Display', serif; font-size: 24px; 
+
+            font-family: 'Playfair Display', serif; font-size: 28px; 
+
             font-weight: 400; font-style: italic; margin-top: 5px;
+
         }
+
+
 
         .album-trigger:hover .trigger-info span { transform: translateY(0); opacity: 1; }
+
         .album-trigger:hover .trigger-info h3 { color: var(--accent-bright); }
 
+
+
         /* --- 3D CINEMA STAGE --- */
+
         .cinema-overlay {
+
             position: fixed; inset: 0; 
+
             background: radial-gradient(circle at center, #0a192f 0%, #000 100%);
+
             z-index: 2000; visibility: hidden; opacity: 0; 
+
             display: flex; flex-direction: column; 
+
             transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+
             perspective: 2000px; 
+
         }
+
         .cinema-overlay.active { visibility: visible; opacity: 1; }
 
+
+
         .cinema-header { padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; z-index: 2100; flex-shrink: 0; }
+
         .close-cinema { color: var(--accent); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; border-bottom: 1px solid var(--accent); }
 
+
+
         .stage-3d { 
+
             flex: 1; 
+
             position: relative; width: 100%; display: flex; align-items: center; justify-content: center; transform-style: preserve-3d; 
-            overflow: hidden;
+
+            overflow: hidden; /* THIS ENSURES ONLY ONE IMAGE IS VISIBLE AT A TIME */
+
         }
+
         .cylinder { position: relative; width: 50vw; height: 100%; transform-style: preserve-3d; transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
+
         .slide-3d { position: absolute; inset: 0; display: flex; justify-content: center; align-items: center; backface-visibility: hidden; transition: 1s; }
 
+
+
         .img-wrapper-3d {
+
             position: relative; line-height: 0;
+
             box-shadow: 0 30px 100px rgba(0,0,0,0.8);
+
             -webkit-box-reflect: below 15px linear-gradient(transparent, transparent 60%, rgba(255,255,255,0.1));
+
         }
+
+
 
         .img-wrapper-3d img { 
-            max-width: 60vw; max-height: 45vh; 
+
+            max-width: 60vw; 
+
+            max-height: 45vh; 
+
             width: auto; height: auto; 
+
             border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; 
+
         }
 
-        .tag-3d { position: absolute; top: 20px; left: 20px; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; color: var(--accent-bright); opacity: 0; transition: 0.5s 0.8s; }
-        .cap-3d { position: absolute; bottom: 20px; left: 20px; right: 20px; font-size: 14px; background: rgba(0,0,0,0.6); padding: 12px 20px; border-radius: 4px; opacity: 0; transition: 0.5s 0.8s; border-left: 3px solid var(--accent-bright); line-height: 1.5; backdrop-filter: blur(10px); text-align: left; }
+
+
+        .tag-3d { 
+
+            position: absolute; top: 20px; left: 20px; 
+
+            font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: 700; 
+
+            color: var(--accent-bright); opacity: 0; transition: 0.5s 0.8s; 
+
+        }
+
+
+
+        .cap-3d { 
+
+            position: absolute; bottom: 20px; left: 20px; right: 20px; 
+
+            font-size: 14px; background: rgba(0,0,0,0.6); 
+
+            padding: 12px 20px; border-radius: 4px; 
+
+            opacity: 0; transition: 0.5s 0.8s; 
+
+            border-left: 3px solid var(--accent-bright); 
+
+            line-height: 1.5; backdrop-filter: blur(10px); text-align: left;
+
+        }
+
+
 
         .active-slide .tag-3d, .active-slide .cap-3d { opacity: 1; }
-        .slide-3d:not(.active-slide) { filter: blur(10px) brightness(0.2) scale(0.8); opacity: 0; }
 
-        .cinema-nav { padding: 40px 0; display: flex; gap: 20px; justify-content: center; z-index: 2100; flex-shrink: 0; }
+        .slide-3d:not(.active-slide) { filter: blur(10px) brightness(0.2) scale(0.8); opacity: 0; } /* ADDED OPACITY 0 FOR NON-ACTIVE SLIDES */
+
+
+
+        .cinema-nav { 
+
+            padding: 40px 0; 
+
+            display: flex; gap: 20px; justify-content: center; z-index: 2100; 
+
+            flex-shrink: 0; 
+
+        }
+
         .nav-link { background: none; border: 1px solid var(--border); color: #fff; padding: 12px 30px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; border-radius: 30px; cursor: pointer; transition: 0.4s; }
+
         .nav-link:hover { border-color: var(--accent); background: rgba(212, 175, 55, 0.1); }
 
+
+
         @media (max-width: 900px) {
+
             .archive-float { grid-template-columns: 1fr; }
+
+            .item-1, .item-2, .item-3, .item-4, .item-5 { grid-column: span 1; height: 350px; margin: 0 !important; }
+
             .img-wrapper-3d img { max-width: 80vw; max-height: 40vh; }
+
         }
+
     </style>
+
 </head>
+
 <body>
+
+
 
 <div class="bg-mesh"></div>
 
+
+
 <div class="container">
+
     <header>
+
         <a href="index.html" class="back-btn" style="text-decoration: none; color: var(--accent); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: bold;">← Departure</a>
+
         <h1 style="font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; margin-top: 20px; font-size: clamp(30px, 6vw, 60px);">Visual <i>Anthology</i></h1>
+
     </header>
-    <main class="archive-float" id="mainGrid"></main>
+
+    <main class="archive-float"></main>
+
 </div>
+
+
 
 <div class="cinema-overlay" id="cinemaOverlay" onclick="overlayClose(event)">
+
     <div class="cinema-header">
+
         <h2 id="cTitle" style="font-family: 'Playfair Display'; font-style: italic; color: var(--accent); font-size: 2rem;">Studio</h2>
+
         <div class="close-cinema" onclick="closeCinema()">Exit Studio</div>
+
     </div>
-    <div class="stage-3d"><div class="cylinder" id="cylinder"></div></div>
+
+    <div class="stage-3d">
+
+        <div class="cylinder" id="cylinder"></div>
+
+    </div>
+
     <div class="cinema-nav">
+
         <button class="nav-link" onclick="manualNav('prev')">Prev</button>
+
         <button class="nav-link" onclick="manualNav('next')">Next</button>
+
     </div>
+
 </div>
 
+
+
 <script>
-    /* To add your folders:
-       Simply create <div id="ALBUMNAME-data" class="album-data" style="display:none"> 
-       anywhere in the body. The script below will find them all and build the grid.
-    */
 
     const cylinder = document.getElementById('cylinder');
+
     const overlay = document.getElementById('cinemaOverlay');
-    const mainGrid = document.getElementById('mainGrid');
+
     let rotation = 0, autoTimer, currentIndex = 0, totalSlides = 0;
 
-    function initGallery() {
-        const albumDataSources = document.querySelectorAll('[id$="-data"]');
-        
-        albumDataSources.forEach((source, index) => {
-            const albumId = source.id.replace('-data', '');
-            const firstImg = source.querySelector('img').src;
-            const albumTitle = albumId.charAt(0).toUpperCase() + albumId.slice(1);
-            
-            // Randomize design properties while maintaining logic
-            const spans = [2, 3, 4, 6];
-            const randomSpan = spans[Math.floor(Math.random() * spans.length)];
-            const randomHeight = Math.floor(Math.random() * (500 - 300 + 1)) + 300;
-            const randomMargin = Math.floor(Math.random() * 40) - 20;
-            const randomFloatTime = (Math.random() * (12 - 6) + 6).toFixed(1);
 
-            const item = document.createElement('div');
-            item.className = 'album-trigger';
-            item.style.gridColumn = `span ${randomSpan}`;
-            item.style.height = `${randomHeight}px`;
-            item.style.marginTop = `${randomMargin}px`;
-            item.style.setProperty('--float-time', `${randomFloatTime}s`);
-            item.onclick = () => openCinema(albumId);
-
-            item.innerHTML = `
-                <img src="${firstImg}" alt="${albumTitle}">
-                <div class="trigger-info">
-                    <span>Archive ${index + 1}</span>
-                    <h3>${albumTitle}</h3>
-                </div>
-            `;
-            mainGrid.appendChild(item);
-        });
-    }
 
     function overlayClose(e) {
-        if (e.target.id === 'cinemaOverlay' || e.target.classList.contains('stage-3d')) closeCinema();
+
+        if (e.target.id === 'cinemaOverlay' || e.target.classList.contains('stage-3d')) {
+
+            closeCinema();
+
+        }
+
     }
+
+
 
     function openCinema(id) {
+
         const data = document.getElementById(id + '-data');
-        if(!data) return;
+
+        if(!data) return alert("Gallery content coming soon.");
+
         const imgs = data.querySelector('.imgs').querySelectorAll('img');
+
         totalSlides = imgs.length;
+
         currentIndex = 0; rotation = 0;
-        document.getElementById('cTitle').innerText = id.toUpperCase();
+
+        document.getElementById('cTitle').innerText = id.toUpperCase().replace('ALBUM', 'ARCHIVE ');
+
         cylinder.innerHTML = '';
+
         cylinder.style.transform = `rotateY(0deg)`;
+
         const radius = Math.max(window.innerWidth * 0.35, 400);
 
+
+
         imgs.forEach((img, i) => {
+
             const slide = document.createElement('div');
+
             slide.className = 'slide-3d' + (i === 0 ? ' active-slide' : '');
+
             const angleStep = 360 / totalSlides;
+
             slide.style.transform = `rotateY(${i * angleStep}deg) translateZ(${totalSlides === 1 ? 0 : radius}px)`;
+
             slide.innerHTML = `
+
                 <div class="img-wrapper-3d" onclick="event.stopPropagation()">
+
                     <img src="${img.src}">
+
                     <div class="tag-3d">${img.getAttribute('data-tag') || 'COLLECTION'}</div>
+
                     <div class="cap-3d">${img.getAttribute('data-cap') || ''}</div>
+
                 </div>`;
+
             cylinder.appendChild(slide);
+
         });
+
+
+
         overlay.classList.add('active');
+
         document.body.style.overflow = 'hidden';
+
         startRotation();
+
     }
+
+
 
     function rotateCylinder(dir) {
+
         if(totalSlides <= 1) return;
+
         const angleStep = 360 / totalSlides;
+
         dir === 'next' ? (rotation -= angleStep, currentIndex = (currentIndex + 1) % totalSlides) 
+
                        : (rotation += angleStep, currentIndex = (currentIndex - 1 + totalSlides) % totalSlides);
+
         cylinder.style.transform = `rotateY(${rotation}deg)`;
+
         document.querySelectorAll('.slide-3d').forEach((s, i) => { s.classList.toggle('active-slide', i === currentIndex); });
+
     }
 
+
+
     function startRotation() { clearInterval(autoTimer); if(totalSlides > 1) autoTimer = setInterval(() => rotateCylinder('next'), 5000); }
+
     function manualNav(dir) { rotateCylinder(dir); startRotation(); }
+
     function closeCinema() { overlay.classList.remove('active'); document.body.style.overflow = 'auto'; clearInterval(autoTimer); }
 
-    window.onload = initGallery;
 </script>
 
+
+
 </body>
+
 </html>

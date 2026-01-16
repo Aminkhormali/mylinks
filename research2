@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research & Publications | Aminollah Khormali, Ph.D.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --glass: rgba(10, 25, 47, 0.7); 
+            --border: rgba(212, 175, 55, 0.3);
+            --text-dark: #FFFFFF;
+            --text-muted: #cbd5e1;
+            --royal-blue: #0A192F; 
+            --deep-navy: #020c1b;
+            --gold-bright: #F9D423;
+            --gold-metallic: #D4AF37;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: linear-gradient(160deg, var(--deep-navy) 0%, var(--royal-blue) 45%, #050a14 100%);
+            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .ambient-canvas { position: fixed; inset: 0; z-index: -1; }
+        .liquid-blob {
+            position: absolute;
+            width: 80vw; height: 80vw;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.04) 0%, transparent 70%);
+            filter: blur(120px);
+            border-radius: 50%;
+            animation: drift 20s infinite alternate ease-in-out;
+        }
+        @keyframes drift { from { transform: translate(-10%, -10%); } to { transform: translate(10%, 10%); } }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+
+        .page-header { text-align: center; margin-bottom: 80px; }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 5vw, 54px);
+            font-style: italic;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #ffffff, var(--gold-bright), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-gold {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            padding: 18px 40px;
+            background: linear-gradient(45deg, #BF953F, #FCF6BA, #B38728, #FBF5B7, #AA771C);
+            background-size: 400% 400%;
+            animation: goldPulse 8s ease infinite;
+            color: #000;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: 0.4s;
+            border: none;
+            cursor: pointer;
+        }
+        @keyframes goldPulse { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .chart-card {
+            background: var(--glass);
+            backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 35px;
+            padding: 40px;
+            height: 400px;
+        }
+        .chart-card h3 {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--gold-metallic);
+            margin-bottom: 25px;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 50px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+        }
+
+        .filter-bar input, .filter-bar select {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 18px;
+            flex: 1;
+            font-family: inherit;
+        }
+
+        .articles-list { display: flex; flex-direction: column; gap: 40px; }
+        
+        .article-card {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            background: var(--glass);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--border);
+            border-radius: 35px;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .article-card:hover { transform: translateY(-5px); border-color: var(--gold-bright); }
+
+        .article-img-wrapper { position: relative; overflow: hidden; }
+        .article-img-wrapper img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+
+        .article-content { padding: 45px; display: flex; flex-direction: column; justify-content: center; }
+        .article-meta { font-size: 10px; font-weight: 700; letter-spacing: 3px; color: var(--gold-bright); text-transform: uppercase; margin-bottom: 12px; }
+        .article-title { font-family: 'Playfair Display', serif; font-size: 28px; line-height: 1.2; margin-bottom: 8px; font-style: italic; }
+        .article-venue { font-size: 14px; color: var(--gold-metallic); margin-bottom: 20px; opacity: 0.9; }
+
+        .abstract-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 15px;
+            position: relative;
+        }
+
+        .abstract-details { flex: 1; }
+
+        .abstract-details summary {
+            list-style: none;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        
+        .abstract-details summary:hover { color: var(--gold-bright); }
+        .abstract-details summary::-webkit-details-marker { display: none; }
+        .abstract-details summary::before { content: '＋'; color: var(--gold-bright); font-weight: bold; }
+        .abstract-details[open] summary::before { content: '－'; }
+
+        .citation-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #000;
+            background: var(--gold-bright);
+            padding: 6px 14px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            margin-left: 20px;
+        }
+
+        .article-abstract { 
+            font-size: 15px; 
+            color: var(--text-muted); 
+            line-height: 1.8; 
+            padding: 20px 0 10px 20px;
+            margin-top: 10px;
+            border-left: 2px solid var(--gold-metallic);
+            animation: slideDown 0.3s ease-out;
+            width: 100%;
+        }
+
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .box-btn {
+            display: inline-flex; align-items: center; justify-content: space-between;
+            padding: 16px 30px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border);
+            border-radius: 15px; text-decoration: none; color: #fff; font-size: 12px; font-weight: 700;
+            width: fit-content; min-width: 200px; text-transform: uppercase; transition: 0.3s;
+        }
+        .box-btn:hover { background: var(--gold-metallic); color: #000; }
+
+        @media (max-width: 950px) {
+            .analytics-grid { grid-template-columns: 1fr; }
+            .article-card { grid-template-columns: 1fr; }
+            .article-img-wrapper { height: 250px; }
+            .filter-bar { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ambient-canvas"><div class="liquid-blob"></div></div>
+
+<div class="container">
+    <header class="page-header">
+        <h1>Research <i>Insight</i></h1>
+        <a href="https://scholar.google.com/citations?user=nJtAVTgAAAAJ" target="_blank" class="btn-gold">
+            Google Scholar Profile
+        </a>
+    </header>
+
+    <div class="analytics-grid">
+        <div class="chart-card"><h3>Publication Velocity</h3><canvas id="pubChart"></canvas></div>
+        <div class="chart-card"><h3>Citation Influence</h3><canvas id="citeChart"></canvas></div>
+    </div>
+
+    <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="Search title or abstract..." onkeyup="filterArticles()">
+        <select id="yearFilter" onchange="filterArticles()">
+            <option value="all">All Years</option>
+            </select>
+        <select id="fieldFilter" onchange="filterArticles()">
+            <option value="all">All Topics</option>
+            </select>
+    </div>
+
+    <div class="articles-list" id="articlesList">
+        </div>
+</div>
+
+<script>
+    const yearsLabel = ['2019', '2020', '2021', '2022', '2023', '2024'];
+
+    async function fetchAndRender() {
+        try {
+            // Change 'articles.json' to the path of your local file
+            const response = await fetch('articles.json');
+            const data = await response.json();
+            
+            populateFilters(data);
+            renderArticles(data);
+            initCharts();
+        } catch (err) {
+            console.error("Failed to load articles:", err);
+            document.getElementById('articlesList').innerHTML = `<p style="text-align:center; color:var(--gold-bright);">Please run this file via a local server (e.g., Live Server) to load the JSON data.</p>`;
+        }
+    }
+
+    function populateFilters(articles) {
+        const yearSelect = document.getElementById('yearFilter');
+        const fieldSelect = document.getElementById('fieldFilter');
+        
+        const years = [...new Set(articles.map(a => a.year))].sort((a, b) => b - a);
+        const fields = [...new Set(articles.map(a => a.topic))].sort();
+
+        years.forEach(y => yearSelect.innerHTML += `<option value="${y}">${y}</option>`);
+        fields.forEach(f => fieldSelect.innerHTML += `<option value="${f}">${f}</option>`);
+    }
+
+    function renderArticles(articles) {
+        const container = document.getElementById('articlesList');
+        container.innerHTML = articles.map(article => `
+            <div class="article-card" data-year="${article.year}" data-field="${article.topic}">
+                <div class="article-img-wrapper">
+                    <img src="${article.image}" alt="Article Background">
+                </div>
+                <div class="article-content">
+                    <div class="article-meta">${article.year} • ${article.topic}</div>
+                    <h2 class="article-title">${article.title}</h2>
+                    <div class="article-venue">${article.venue}</div>
+                    
+                    <div class="abstract-header">
+                        <details class="abstract-details">
+                            <summary>View Abstract</summary>
+                            <div class="article-abstract">${article.abstract}</div>
+                        </details>
+                        <div class="citation-badge">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2V7h2v10z"/></svg>
+                            ${article.citations} Citations
+                        </div>
+                    </div>
+
+                    <a href="${article.link}" target="_blank" class="box-btn">Read Publication <span>→</span></a>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function initCharts() {
+        const pCtx = document.getElementById('pubChart').getContext('2d');
+        new Chart(pCtx, { 
+            type: 'bar', 
+            data: { labels: yearsLabel, datasets: [{ data: [4, 6, 5, 8, 5, 7], backgroundColor: '#F9D423' }] }, 
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+        });
+        
+        const cCtx = document.getElementById('citeChart').getContext('2d');
+        new Chart(cCtx, { 
+            type: 'line', 
+            data: { labels: yearsLabel, datasets: [{ data: [120, 380, 650, 920, 1150, 1420], borderColor: '#F9D423', fill: false }] }, 
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+        });
+    }
+
+    function filterArticles() {
+        const searchText = document.getElementById('searchInput').value.toLowerCase();
+        const selectedYear = document.getElementById('yearFilter').value;
+        const selectedField = document.getElementById('fieldFilter').value;
+        
+        document.querySelectorAll('.article-card').forEach(card => {
+            const title = card.querySelector('.article-title').innerText.toLowerCase();
+            const abstract = card.querySelector('.article-abstract').innerText.toLowerCase();
+            const cardYear = card.dataset.year;
+            const cardField = card.dataset.field;
+
+            const matchesKeyword = title.includes(searchText) || abstract.includes(searchText);
+            const matchesYear = selectedYear === 'all' || cardYear === selectedYear;
+            const matchesField = selectedField === 'all' || cardField === selectedField;
+
+            card.style.display = (matchesKeyword && matchesYear && matchesField) ? 'grid' : 'none';
+        });
+    }
+
+    window.onload = fetchAndRender;
+</script>
+
+</body>
+</html>

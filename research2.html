@@ -132,7 +132,7 @@
 
         .article-card:hover { transform: translateY(-5px); border-color: var(--gold-bright); }
 
-        .article-img-wrapper { position: relative; overflow: hidden; }
+        .article-img-wrapper { position: relative; overflow: hidden; background: #020c1b; }
         .article-img-wrapper img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
 
         .article-content { padding: 45px; display: flex; flex-direction: column; justify-content: center; }
@@ -237,13 +237,9 @@
         <input type="text" id="searchInput" placeholder="Search title or abstract..." onkeyup="filterArticles()">
         <select id="yearFilter" onchange="filterArticles()">
             <option value="all">All Years</option>
-            <option value="2024">2024</option>
-            <option value="2021">2021</option>
         </select>
         <select id="fieldFilter" onchange="filterArticles()">
             <option value="all">All Topics</option>
-            <option value="AI">AI & Deep Learning</option>
-            <option value="Network">Network Security</option>
         </select>
     </div>
 
@@ -252,44 +248,65 @@
 </div>
 
 <script>
-    const years = ['2019', '2020', '2021', '2022', '2023', '2024'];
+    // FOLDER CONFIGURATION
+    const IMAGE_FOLDER = "images/"; 
+    const DATA_FILE = "publications.json";
     
+    // Constant for charts
+    const chartLabels = ['2019', '2020', '2021', '2022', '2023', '2024'];
+
     window.onload = async () => {
-        // Init Charts
         initCharts();
         
-        // Load Publications
         try {
-            const response = await fetch('publications.json');
+            const response = await fetch(DATA_FILE);
             const publications = await response.json();
+            
+            // 1. Auto-populate filters based on what's in the JSON
+            setupFilters(publications);
+            
+            // 2. Render the actual article cards
             renderArticles(publications);
         } catch (error) {
-            console.error('Error loading publications:', error);
-            document.getElementById('articlesList').innerHTML = '<p style="text-align:center">Error loading publications. Please ensure publications.json is present.</p>';
+            console.error("Error fetching data:", error);
+            document.getElementById('articlesList').innerHTML = '<p style="text-align:center">Error loading publication data. Ensure publications.json exists.</p>';
         }
     };
 
-    function initCharts() {
-        const pCtx = document.getElementById('pubChart').getContext('2d');
-        new Chart(pCtx, { 
-            type: 'bar', 
-            data: { labels: years, datasets: [{ data: [4, 6, 5, 8, 5, 7], backgroundColor: '#F9D423' }] }, 
-            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+    function setupFilters(publications) {
+        const yearSelect = document.getElementById('yearFilter');
+        const fieldSelect = document.getElementById('fieldFilter');
+        
+        // Get unique years and fields
+        const uniqueYears = [...new Set(publications.map(p => p.year))].sort((a,b) => b-a);
+        const uniqueFields = [];
+        const fieldMap = new Map();
+
+        publications.forEach(p => {
+            if(!fieldMap.has(p.field)) {
+                fieldMap.set(p.field, p.fieldType);
+            }
         });
-        const cCtx = document.getElementById('citeChart').getContext('2d');
-        new Chart(cCtx, { 
-            type: 'line', 
-            data: { labels: years, datasets: [{ data: [120, 380, 650, 920, 1150, 1420], borderColor: '#F9D423', fill: false }] }, 
-            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+
+        uniqueYears.forEach(year => {
+            yearSelect.innerHTML += `<option value="${year}">${year}</option>`;
+        });
+
+        fieldMap.forEach((fullName, shortCode) => {
+            fieldSelect.innerHTML += `<option value="${shortCode}">${fullName}</option>`;
         });
     }
 
     function renderArticles(publications) {
         const container = document.getElementById('articlesList');
-        container.innerHTML = publications.map(pub => `
+        container.innerHTML = publications.map(pub => {
+            // Construct image path: Use folder prefix unless it's an external URL
+            const imgSrc = (pub.image.startsWith('http')) ? pub.image : IMAGE_FOLDER + pub.image;
+            
+            return `
             <div class="article-card" data-year="${pub.year}" data-field="${pub.field}">
                 <div class="article-img-wrapper">
-                    <img src="${pub.image}" alt="Publication image">
+                    <img src="${imgSrc}" alt="Publication image" onerror="this.src='https://via.placeholder.com/400x300/020c1b/D4AF37?text=Research+Paper'">
                 </div>
                 <div class="article-content">
                     <div class="article-meta">${pub.year} • ${pub.fieldType}</div>
@@ -307,10 +324,25 @@
                         </div>
                     </div>
 
-                    <a href="${pub.link}" class="box-btn">Read Publication <span>→</span></a>
+                    <a href="${pub.link}" target="_blank" class="box-btn">Read Publication <span>→</span></a>
                 </div>
-            </div>
-        `).join('');
+            </div>`;
+        }).join('');
+    }
+
+    function initCharts() {
+        const pCtx = document.getElementById('pubChart').getContext('2d');
+        new Chart(pCtx, { 
+            type: 'bar', 
+            data: { labels: chartLabels, datasets: [{ data: [4, 6, 5, 8, 5, 7], backgroundColor: '#F9D423' }] }, 
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+        });
+        const cCtx = document.getElementById('citeChart').getContext('2d');
+        new Chart(cCtx, { 
+            type: 'line', 
+            data: { labels: chartLabels, datasets: [{ data: [120, 380, 650, 920, 1150, 1420], borderColor: '#F9D423', fill: false }] }, 
+            options: { maintainAspectRatio: false, plugins: { legend: { display: false } } } 
+        });
     }
 
     function filterArticles() {
@@ -325,8 +357,8 @@
             const cardField = card.dataset.field;
 
             const matchesKeyword = title.includes(searchText) || abstract.includes(searchText);
-            const matchesYear = selectedYear === 'all' || cardYear === selectedYear;
-            const matchesField = selectedField === 'all' || cardField === selectedField;
+            const matchesYear = (selectedYear === 'all' || cardYear === selectedYear);
+            const matchesField = (selectedField === 'all' || cardField === selectedField);
 
             card.style.display = (matchesKeyword && matchesYear && matchesField) ? 'grid' : 'none';
         });

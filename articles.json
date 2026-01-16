@@ -2,23 +2,50 @@
   {
     "year": "2024",
     "field": "AI",
-    "topic": "AI & Deep Learning",
+    "fieldType": "AI & Deep Learning",
+    "image": "deepfake_graph.jpg",
     "title": "Self-Supervised Graph Transformer for Deepfake Detection",
-    "venue": "IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",
-    "abstract": "A novel approach using spatial-temporal graph reasoning to identify sophisticated AI-generated facial manipulations.",
-    "citations": 84,
-    "link": "#",
-    "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=600&q=80"
+    "venue": "IEEE CVPR",
+    "abstract": "A novel approach using spatial-temporal graph reasoning...",
+    "citations": "84",
+    "link": "https://doi.org/10.1109/CVPR2024.001"
   },
-  {
-    "year": "2021",
-    "field": "Network",
-    "topic": "Network Security",
-    "title": "Privacy-Preserving DNS Protocols for IoT Ecosystems",
-    "venue": "Journal of Network and Computer Applications",
-    "abstract": "Analyzing the trade-offs between latency and encryption in DNS-over-HTTPS (DoH) for edge devices.",
-    "citations": 156,
-    "link": "#",
-    "image": "https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&w=600&q=80"
+
+    {
+    "year": "2024",
+    "field": "AI",
+    "fieldType": "AI & Deep Learning",
+    "image": "deepfake_graph.jpg",
+    "title": "Self-Supervised Graph Transformer for Deepfake Detection",
+    "venue": "IEEE CVPR",
+    "abstract": "A novel approach using spatial-temporal graph reasoning...",
+    "citations": "84",
+    "link": "https://doi.org/10.1109/CVPR2024.001"
+  },
+
+
+    {
+    "year": "2025",
+    "field": "AI",
+    "fieldType": "AI & Deep Learning",
+    "image": "deepfake_graph.jpg",
+    "title": "Self-Supervised Graph Transformer for Deepfake Detection",
+    "venue": "IEEE CVPR",
+    "abstract": "A novel approach using spatial-temporal graph reasoning...",
+    "citations": "84",
+    "link": "https://doi.org/10.1109/CVPR2024.001"
+  },
+
+
+    {
+    "year": "2025",
+    "field": "AI",
+    "fieldType": "AI & Deep Learning",
+    "image": "deepfake_graph.jpg",
+    "title": "Self-Supervised Graph Transformer for Deepfake Detection",
+    "venue": "IEEE CVPR",
+    "abstract": "A novel approach using spatial-temporal graph reasoning...",
+    "citations": "84",
+    "link": "https://doi.org/10.1109/CVPR2024.001"
   }
 ]
